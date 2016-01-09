@@ -1,15 +1,26 @@
 package ie.gmit.sw;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TextScorer {
 	
-	private Map<String, Double> map = null;
+	private Map<String, Double> map = new HashMap<String, Double>();
 	
 	public TextScorer(Map<String, Double> m)
 	{
 		this.map = m;
 	}
+	
+	/*public void testMapContent()
+	{
+		
+		for(Map.Entry<String, Double>entry : map.entrySet())
+		{
+			System.out.println("Key: " + entry.getKey() + " " + "Value :" + entry.getValue());
+		}
+		
+	}*/
 	
 	public double getScore(String text)
 	{
@@ -19,7 +30,7 @@ public class TextScorer {
 		for (int i = 0; i < text.length(); i++)
 		{
 			
-			if (i +  QuadGramMap.GRAM_SIZE <= text.length() -1)
+			if (i +  QuadGramMap.GRAM_SIZE <= text.length() - 1)
 			{
 				
 				score += computeLogScore(text.substring(i, i + QuadGramMap.GRAM_SIZE));
@@ -36,6 +47,7 @@ public class TextScorer {
 		
 		if (map.containsKey(quadgram)){
 			
+			
 			double frequency = map.get(quadgram);
 			double total = (double) map.size();
 			double probability = (double) (frequency/total);
@@ -43,7 +55,7 @@ public class TextScorer {
 			return Math.log10(probability);
 			
 		}else{
-			
+		
 			return 0f;
 		}// End if/else
 		

@@ -14,7 +14,7 @@ public class FileParser {
 		
 		// Variables 
 		String quadgram, line = "";
-		Double value;
+		double value;
 	
 		// Create concurrent hashmap
 		map = new ConcurrentHashMap<String, Double>();

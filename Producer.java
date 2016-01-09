@@ -1,6 +1,7 @@
 package ie.gmit.sw;
 
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class Producer implements Runnable{
@@ -8,20 +9,21 @@ public class Producer implements Runnable{
 	private String encryptedMessage;
 	private int key;
 	
-	private Map<String, Double> map = null;
-	private BlockingQueue<Resultable> queue;
+	private Map<String, Double> map;
 	
-	public Producer(String encryptedMessage, int key) 
+	public Producer(String encryptedMessage, int key, Map<String, Double> map) 
 	{
 		super();
 		this.encryptedMessage = encryptedMessage;
 		this.key = key;
+		this.map = map;
 		
+		//consumer = new Consumer(queue);
 		// Testing code
-		System.out.println(encryptedMessage);
+		//System.out.println(encryptedMessage);
 		
 	}
-
+	
 	// Run method for thread
 	public void run()
 	{
@@ -37,7 +39,7 @@ public class Producer implements Runnable{
 		decryptedText = decrypt.decrypt(encryptedMessage, key);
 		
 		// Score the decrypted text
-		ts.getScore(decryptedText);
+		score = ts.getScore(decryptedText);
 		
 		// Create new result object, pass in 
 		Resultable r = new Result(decryptedText, key, score);
@@ -45,7 +47,7 @@ public class Producer implements Runnable{
 		try
 		{
 			// Put the Resultable object into the BlockingQueue
-			queue.put(r);
+			Buffer.queue.put(r);
 			
 		} catch (InterruptedException e) 
 		{

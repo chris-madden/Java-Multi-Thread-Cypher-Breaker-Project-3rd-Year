@@ -2,6 +2,8 @@ package ie.gmit.sw;
 
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Runner {
@@ -15,18 +17,21 @@ public class Runner {
 		FileParser fp = new FileParser();
 		Encrypt encrypt = new Encrypt();
 		Producer producer;
+		Consumer consumer;
+		StartProducing startProducing;
+		BlockingQueue<Resultable> queue = new ArrayBlockingQueue<Resultable>(100);
 		
 		//RailFence rf = new RailFence();
 		
 		// Only need map for testing
-		//Map<String, Double> map = new ConcurrentHashMap<String, Double>();
+		Map<String, Double> map;;
 		
 		// Variables
 		String message, encryptedMessage;
 		int key;
 		
-		// parse the file
-		fp.parse("4grams.txt");
+		// parse the file and store in map
+		map = fp.parse("4grams.txt");
 		
 		/*// Testing that map is working
 		try {
@@ -60,10 +65,36 @@ public class Runner {
 		key = input.nextInt();
 				
 		// Encrypt the message with the key and store in String encryptedMessage
-		encryptedMessage = encrypt.encrypt(message, key);		
+		encryptedMessage = encrypt.encrypt(message, key);	
 		
 		// Pass encrypted message and key to the producer
-		producer = new Producer(encryptedMessage, key);
+		producer = new Producer(encryptedMessage, key, map);
+		
+		// Create object to start threads
+		StartProducing sp = new StartProducing(encryptedMessage, map);
+		
+		// Runs the threads for producing
+		sp.createThreads();
+		
+		StartConsumer sc = new StartConsumer();
+		
+		sc.consume();
+		
+		
+		
+		System.out.println(Buffer.queue.size());
+		
+		consumer = new Consumer();
+		
+		consumer.results();
+		
+		/*Resultable resultable =  new ;
+				
+				consumer.getFinalResult();
+		
+		System.out.println(resultable.getKey());*/
+		
+		//System.out.println("Plain text: " + resultable.getPlainText() + " Key: " + resultable.getKey() + " Score: " + resultable.getScore());
 		
 		// Close the Scanner
 		input.close();
