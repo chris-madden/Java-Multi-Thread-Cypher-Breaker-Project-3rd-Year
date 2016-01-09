@@ -14,6 +14,7 @@ public class Runner {
 		Scanner input = new Scanner(System.in);
 		FileParser fp = new FileParser();
 		Encrypt encrypt = new Encrypt();
+		Producer producer;
 		
 		//RailFence rf = new RailFence();
 		
@@ -60,6 +61,9 @@ public class Runner {
 				
 		// Encrypt the message with the key and store in String encryptedMessage
 		encryptedMessage = encrypt.encrypt(message, key);		
+		
+		// Pass encrypted message and key to the producer
+		producer = new Producer(encryptedMessage, key);
 		
 		// Close the Scanner
 		input.close();
