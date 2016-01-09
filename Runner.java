@@ -13,13 +13,15 @@ public class Runner {
 		// Create objects
 		Scanner input = new Scanner(System.in);
 		FileParser fp = new FileParser();
+		Encrypt encrypt = new Encrypt();
+		
 		//RailFence rf = new RailFence();
 		
 		// Only need map for testing
 		//Map<String, Double> map = new ConcurrentHashMap<String, Double>();
 		
 		// Variables
-		String message;
+		String message, encryptedMessage;
 		int key;
 		
 		// parse the file
@@ -56,7 +58,9 @@ public class Runner {
 		// Get key from user
 		key = input.nextInt();
 				
-				
+		// Encrypt the message with the key and store in String encryptedMessage
+		encryptedMessage = encrypt.encrypt(message, key);		
+		
 		// Close the Scanner
 		input.close();
 
