@@ -18,12 +18,6 @@ public class Runner {
 		Encrypt encrypt = new Encrypt();
 		Producer producer;
 		Consumer consumer;
-		StartProducing startProducing;
-		BlockingQueue<Resultable> queue = new ArrayBlockingQueue<Resultable>(100);
-		
-		//RailFence rf = new RailFence();
-		
-		// Only need map for testing
 		Map<String, Double> map;;
 		
 		// Variables
@@ -32,21 +26,6 @@ public class Runner {
 		
 		// parse the file and store in map
 		map = fp.parse("4grams.txt");
-		
-		/*// Testing that map is working
-		try {
-			
-			map = fp.parse("4grams.txt");
-			
-			for(Map.Entry<String, Double>entry : map.entrySet())
-			{
-				System.out.println("Key: " + entry.getKey() + " " + "Value :" + entry.getValue());
-			}
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
 		//================== Take in message and key from user ======================
 		
@@ -57,16 +36,21 @@ public class Runner {
 		// Get message from user
 		message = input.nextLine();
 		
+		// Force text to uppercase 
+		message = message.toUpperCase();
+		
+		System.out.println(message);
+		
 		//Prompt user
 		System.out.println("\nEnter your key");
 		System.out.println("=================");
 		
 		// Get key from user
 		key = input.nextInt();
-				
+					
 		// Encrypt the message with the key and store in String encryptedMessage
 		encryptedMessage = encrypt.encrypt(message, key);	
-		
+			
 		// Pass encrypted message and key to the producer
 		producer = new Producer(encryptedMessage, key, map);
 		
@@ -76,29 +60,21 @@ public class Runner {
 		// Runs the threads for producing
 		sp.createThreads();
 		
+		// Create StartConsumer object
 		StartConsumer sc = new StartConsumer();
 		
+		// Start thread to take objects from BlockingQueue
 		sc.consume();
-		
-		
-		
-		System.out.println(Buffer.queue.size());
-		
+	
+		// Create consumer object
 		consumer = new Consumer();
 		
-		consumer.results();
-		
-		/*Resultable resultable =  new ;
-				
-				consumer.getFinalResult();
-		
-		System.out.println(resultable.getKey());*/
-		
-		//System.out.println("Plain text: " + resultable.getPlainText() + " Key: " + resultable.getKey() + " Score: " + resultable.getScore());
+		// Get the best result
+		consumer.getFinalResult();
 		
 		// Close the Scanner
 		input.close();
 
 	}// End main
 
-}
+}// End class Runner

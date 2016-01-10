@@ -1,67 +1,60 @@
 package ie.gmit.sw;
 
 public class Consumer implements Runnable{
-	
-	//private BlockingQueue<Resultable> queue;
-	private double highestScore = -1000;
-	private Resultable finalResult;// Problem here
-	
 
+	private double highestScore = -1000;
+	private Resultable finalResult, r;
+	
 	public Consumer() {
 		
 	}
 
-
 	public void run()
 	{
 		
-		while(!Buffer.queue.isEmpty())
+		while(true)
 		{
 			
 			try 
 			{
 				
-				Resultable r = Buffer.queue.take();
+				// Take the next object from the queue
+				r = Buffer.queue.take();
+			
 				
-				//System.out.println("Text: " + r.getPlainText() +  " Key: " + r.getKey() + " Score: " + r.getScore());
-				
-				double score = r.getScore();
-				
-				
-				
-				if(score > highestScore)
-				{
-					highestScore = score;
-					
-					finalResult = r;
-					
-					//System.out.println(highestScore);
-				}
-				
-				
-			} catch (Exception e)
+			} catch (InterruptedException e)
 			{
 				
 				e.printStackTrace();
-				
-			}// End try/catch
+			}
 			
+			// Store the score from the Resultable object in variable score
+			double score = r.getScore();
+			
+			// If score is higher than current highest score
+			if(score > highestScore)
+			{
+				// Store the new score as the highest score
+				highestScore = score;
+				
+				// Keep track of the best result object
+				finalResult = r;
+		
+			}// End if
+			
+			// Print out the contents of Resultable object for each thread
+			System.out.println("Text: " + r.getPlainText() +  " Key: " + r.getKey() + " Score: " + r.getScore());
+					
 		}// End while
 		
     }// End run
 	
+	// Return the object with the best result
 	public Resultable getFinalResult()
 	{
 		
 		return finalResult;
-	}
-	
-	public void results()
-	{
 		
-		//System.out.println(finalResult.getPlainText() + " " + finalResult.getKey() + " " + finalResult.getScore());
-		
-		
-	}
+	}// End getFinalResult
 
 }// End class Consumer

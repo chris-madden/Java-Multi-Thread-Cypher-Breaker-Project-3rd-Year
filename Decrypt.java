@@ -114,6 +114,7 @@ public class Decrypt{
 		
 		 //Convert the StringBuffer into a String and return it
 		return sb.toString();
-	}
+		
+	}// End decrypt
 
 }// End Decrypt

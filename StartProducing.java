@@ -20,12 +20,12 @@ public class StartProducing
 	{
 		
 		// Produce threads to start decrypting and score the quadgrams
-		for(int key = 2; key < encryptedMessage.length() / 2; key++)
+		for(int key = 2; key < (encryptedMessage.length() / 2); key++)
 		{
-			
+		
 			// Create new threads with a different key each time
 			(new Thread(new Producer(encryptedMessage, key, map))).start();
-			
+		
 		}// End for loop
 		
 	}// End createThreads

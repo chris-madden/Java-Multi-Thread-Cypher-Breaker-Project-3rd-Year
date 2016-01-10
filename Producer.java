@@ -8,7 +8,6 @@ public class Producer implements Runnable{
 	
 	private String encryptedMessage;
 	private int key;
-	
 	private Map<String, Double> map;
 	
 	public Producer(String encryptedMessage, int key, Map<String, Double> map) 
@@ -17,10 +16,6 @@ public class Producer implements Runnable{
 		this.encryptedMessage = encryptedMessage;
 		this.key = key;
 		this.map = map;
-		
-		//consumer = new Consumer(queue);
-		// Testing code
-		//System.out.println(encryptedMessage);
 		
 	}
 	
@@ -43,7 +38,7 @@ public class Producer implements Runnable{
 		
 		// Create new result object, pass in 
 		Resultable r = new Result(decryptedText, key, score);
-		
+				
 		try
 		{
 			// Put the Resultable object into the BlockingQueue
@@ -55,9 +50,6 @@ public class Producer implements Runnable{
 			e.printStackTrace();
 			
 		}
-		
-		// Testing code
-		//System.out.println(decryptedText + " " + key + " " + score);
 		
 	}// End run
 	
