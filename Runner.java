@@ -61,17 +61,17 @@ public class Runner {
 		sp.createThreads();
 		
 		// Create StartConsumer object
-		StartConsumer sc = new StartConsumer();
+		StartConsumer sc = new StartConsumer(encryptedMessage);
 		
 		// Start thread to take objects from BlockingQueue
 		sc.consume();
 	
 		// Create consumer object
-		consumer = new Consumer();
+		consumer = new Consumer(encryptedMessage);
 		
 		// Get the best result
-		consumer.getFinalResult();
 		
+		//System.out.println(consumer.getFinalResult());
 		// Close the Scanner
 		input.close();
 

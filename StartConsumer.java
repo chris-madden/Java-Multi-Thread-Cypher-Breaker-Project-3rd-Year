@@ -3,11 +3,20 @@ package ie.gmit.sw;
 public class StartConsumer 
 {
 	
+	private String text;
+	
+	
+	
+	public StartConsumer(String text) {
+
+		this.text = text;
+	}
+
 	public void consume()
 	{
 			
 		// Create new threads based on Consumer
-		Thread t = new Thread(new Consumer());
+		Thread t = new Thread(new Consumer(text));
 		
 		// Start thread 
 		t.start();

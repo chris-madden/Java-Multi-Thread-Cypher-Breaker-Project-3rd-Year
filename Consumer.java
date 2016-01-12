@@ -4,15 +4,19 @@ public class Consumer implements Runnable{
 
 	private double highestScore = -1000;
 	private Resultable finalResult, r;
+	private String text;
 	
-	public Consumer() {
+	public Consumer(String text) {
+		
+		this.text = text;
 		
 	}
 
 	public void run()
 	{
+		int key = 2; 
 		
-		while(true)
+		while(key < (text.length() / 2))
 		{
 			
 			try 
@@ -39,22 +43,19 @@ public class Consumer implements Runnable{
 				
 				// Keep track of the best result object
 				finalResult = r;
+				
 		
 			}// End if
 			
 			// Print out the contents of Resultable object for each thread
-			System.out.println("Text: " + r.getPlainText() +  " Key: " + r.getKey() + " Score: " + r.getScore());
+			//System.out.println("Text: " + finalResult.getPlainText() +  " Key: " + finalResult.getKey() + " Score: " + finalResult.getScore());
+			
+			key++;
 					
 		}// End while
 		
+		System.out.println("Text = " + finalResult.getPlainText() + " Key = " + finalResult.getKey() + " Score = " + finalResult.getScore());
+		
     }// End run
-	
-	// Return the object with the best result
-	public Resultable getFinalResult()
-	{
-		
-		return finalResult;
-		
-	}// End getFinalResult
 
 }// End class Consumer
