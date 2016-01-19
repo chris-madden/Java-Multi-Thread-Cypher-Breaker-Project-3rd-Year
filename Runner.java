@@ -69,9 +69,6 @@ public class Runner {
 		// Create consumer object
 		consumer = new Consumer(encryptedMessage);
 		
-		// Get the best result
-		
-		//System.out.println(consumer.getFinalResult());
 		// Close the Scanner
 		input.close();
 
